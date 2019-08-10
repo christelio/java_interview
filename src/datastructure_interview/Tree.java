@@ -49,13 +49,11 @@ public class Tree {
 	public void ptfTree(List<Integer> result, TreeNode root) {
         
         if (root.left != null) {
-            dsfTree(result, root.left);
-        }
-        
-      
+            ptfTree(result, root.left);
+        } 
         
         if (root.right != null) {
-            dsfTree(result, root.right);
+            ptfTree(result, root.right);
         }
         result.add(root.val);
     }

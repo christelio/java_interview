@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyQueue {
-	// 只有队头指针的队列
+	// 只有队头指针的队列 基于List实现
+	/*
+	 * enQueue(int x)入队
+	 * deQueue()出队
+	 * isEmpty()判断非空
+	 * Font()取出对头元素
+	 * 
+	 * 
+	 * */
 	class Queue {
 		// 队列
 		private List<Integer> data;
@@ -41,6 +49,13 @@ public class MyQueue {
 		}
 	}
 
+	
+	//循环队列
+	/*基于数组实现的循环队列
+	 * enQueue(int x)入队
+	 * 
+	 * 
+	 * */
 	class CircularQueue {
 		// 队列
 		private int[] data;
@@ -65,7 +80,7 @@ public class MyQueue {
 			if (isEmpty() == true) {
 				head = 0;
 			}
-			tail = (tail + 1) % size;
+			tail = (tail + 1) % size;// 循环队列
 			data[tail] = value;
 			return true;
 		}
@@ -100,6 +115,7 @@ public class MyQueue {
 		// 判断是否队满
 		public boolean isFull() {
 			return ((tail + 1) % size) == head;
+
 		}
 
 	}

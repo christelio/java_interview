@@ -250,4 +250,34 @@ public class array1 {
 		}
 		return false;
 	}
+
+	public static int kthSmallest(int[][] matrix, int k) {
+		int row = matrix.length, col = matrix[0].length;
+		int l = matrix[0][0], r = matrix[row - 1][col - 1];
+		while (l <= r) {
+			int mid = (r - l) / 2 + l;
+			System.out.println(mid);
+			int count = 0;
+			for (int i = 0; i < row; i++) {
+				for (int j = 0; j < col && matrix[i][j] <= mid; j++) {
+					count++;
+				}
+			}
+			if (count < k)
+				l = mid + 1;
+			else
+				r = mid - 1;
+			System.out.println(count+"aaa");
+		}
+	
+		return l;
+	}
+	public static void main(String[] args)
+	{
+		int nums[][]= {{1,5,9},{2,6,11},{7,10,12}};
+		System.out.println(kthSmallest(nums,4));
+		System.out.println((87.363));
+		
+	}
+
 }

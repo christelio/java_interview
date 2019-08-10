@@ -16,58 +16,30 @@ public class Sort {
 			arr[f + 1] = insertNote;
 		}
 	}
-	//快速排序
+
+	// 快速排序,固定中间值的方法
 	class Qksort {
 		// 寻找中间值
-		public int partition(int[] arr, int left, int right) {
-			int temp = arr[left];// temp是选取值
-			while (left < right) {
-				// 先填补左边的坑
-				while (left < right && arr[right] >= temp) {
-					--right;
-				}
-				if (left < right) {
-					arr[left] = arr[right];
-					++left;
-				}
-				// 然后填补右边的坑
-				while (left < right && arr[left] <=temp) {
-					++left;
-				}
-				if (left < right) {
-					arr[right] = arr[left];
-					--right;
-				}
-			}
-			arr[left] = temp;
-			return left;//
-		}
-
-		// 快排的递归
-		public void quickSort(int[] arr, int left, int right) {
-			if (arr == null || left >=right || arr.length <=1)
-				return;
-			int mid = partition(arr, left, right);
-			quickSort(arr, left, mid);
-			quickSort(arr, mid + 1, right);
-
-		}
+	
 	}
-	//冒泡排序
-	public  void bubbleSort1(int[] a, int n) {
-		int i, j;
 
+	// 冒泡排序
+	public int[] bubbleSort1(int[] a, int n) {
+		if (a == null || a.length < 2)
+			return null;
+		int i, j;
 		for (i = 0; i < n; i++) {// 表示n次排序过程。
-			for (j = 1; j < n - i; j++) {
-				if (a[j - 1] > a[j]) {// 前面的数字大于后面的数字就交换
+			for (j = 0; j < n - i; j++) {
+				if (a[j + 1] > a[j]) {// 前面的数字大于后面的数字就交换
 					// 交换a[j-1]和a[j]
 					int temp;
-					temp = a[j - 1];
-					a[j - 1] = a[j];
+					temp = a[j + 1];
+					a[j + 1] = a[j];
 					a[j] = temp;
 				}
 			}
 		}
+		return a;
 	}
 
 	// 二分法排序
@@ -87,60 +59,51 @@ public class Sort {
 		}
 		return -1;
 	}
-		
-		//归并排序的递归
-	public  void sort(int[] arr, int L, int R) {
-	    if(L == R) {
-	        return;
-	    }
-	    int mid = L + ((R - L) /2);
-	    sort(arr, L, mid);
-	    sort(arr, mid + 1, R);
-	    merge(arr, L, mid, R);
+
+	// 归并排序的递归
+	public void sort(int[] arr, int L, int R) {
+		//递归终点
+		if (L == R) {
+			return;
+		}
+		//分解的子问题
+		int mid = L + ((R - L) / 2);
+		sort(arr, L, mid);
+		sort(arr, mid + 1, R);
+		merge(arr, L, mid, R);
 	}
 
-	public  void merge(int[] arr, int L, int mid, int R) {
-	    int[] temp = new int[R - L + 1];
-	    int i = 0;
-	    int p1 = L;
-	    int p2 = mid + 1;
-	    // 比较左右两部分的元素，哪个小，把那个元素填入temp中
-	    while(p1 <= mid && p2 <= R) {
-	        temp[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
-	    }
-	    // 上面的循环退出后，把剩余的元素依次填入到temp中
-	    // 以下两个while只有一个会执行
-	    while(p1 <= mid) {
-	        temp[i++] = arr[p1++];
-	    }
-	    while(p2 <= R) {
-	        temp[i++] = arr[p2++];
-	    }
-	    // 把最终的排序的结果复制给原数组
-	    for(i = 0; i < temp.length; i++) {
-	        arr[L + i] = temp[i];
-	    }
+	public void merge(int[] arr, int L, int mid, int R) {
+		int[] temp = new int[R - L + 1];
+		int i = 0;
+		int p1 = L;
+		int p2 = mid + 1;
+		// 比较左右两部分的元素，哪个小，把那个元素填入temp中
+		while (p1 <= mid && p2 <= R) {
+			temp[i++] = arr[p1] < arr[p2] ? arr[p1++] : arr[p2++];
+		}
+		// 上面的循环退出后，把剩余的元素依次填入到temp中
+		// 以下两个while只有一个会执行
+		while (p1 <= mid) {
+			temp[i++] = arr[p1++];
+		}
+		while (p2 <= R) {
+			temp[i++] = arr[p2++];
+		}
+		// 把最终的排序的结果复制给原数组
+		for (i = 0; i < temp.length; i++) {
+			arr[L + i] = temp[i];
+		}
 	}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	public static void main(String[] args) {
 		Sort demo = new Sort();
 		int num[] = { 5, 4, 7, 8, 3, 8, 2, 1 };
 		demo.sort(num, 0, 7);
 		for (int i = 0; i < num.length; i++) {
 			System.out.println(num[i]);
-
 		}
 
 	}
-	
-
 
 }

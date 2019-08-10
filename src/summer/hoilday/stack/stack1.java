@@ -1,12 +1,55 @@
 package summer.hoilday.stack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 public class stack1 {
-	
-	
+	/*
+	 * 基于数组的栈
+	 * 
+	 * 入栈push(int x)
+	 **出栈pop();
+	 *获取栈顶元素top()
+	 *判断是否为空isEmpty();
+	 *
+	 */
+	class stack {
+		private List<Integer> data; // store elements
+
+		public stack() {
+			data = new ArrayList<>();
+		}
+
+		/** Insert an element into the stack. */
+		public void push(int x) {
+			data.add(x);
+		}
+
+		/** Checks whether the queue is empty or not. */
+		public boolean isEmpty() {
+			return data.isEmpty();
+		}
+
+		/** Get the top item from the queue. */
+		public int top() {
+			return data.get(data.size() - 1);
+		}
+
+		/**
+		 * Delete an element from the queue. Return true if the operation is successful.
+		 */
+		public boolean pop() {
+			if (isEmpty()) {
+				return false;
+			}
+			data.remove(data.size() - 1);
+			return true;
+		}
+
+	}
 	
 	class MinStack {
 		// 库栈
@@ -14,11 +57,11 @@ public class stack1 {
 		// 最小值
 		private int min = Integer.MAX_VALUE;
 		private Map<Integer, Integer> count = new HashMap<Integer, Integer>();
-
+		//初始化
 		public MinStack() {
 			stack = new Stack<Integer>();
 		}
-
+		//进栈
 		public void push(int x) {
 			if (x <= min) {
 				min = x;
@@ -30,6 +73,7 @@ public class stack1 {
 			}
 			stack.push(x);
 		}
+		//出栈
 		public void pop()
 		{
 			Integer pop=stack.pop();
@@ -68,13 +112,10 @@ public class stack1 {
 				return stack.get(stack.size()-1);
 			}
 		}
+		//返回最小数
 		public int getMin()
 		{
 			return min;
 		}
 	}
-	
-	
-	
-	
 }
