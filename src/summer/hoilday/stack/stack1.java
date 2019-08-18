@@ -10,112 +10,98 @@ public class stack1 {
 	/*
 	 * 基于数组的栈
 	 * 
-	 * 入栈push(int x)
-	 **出栈pop();
-	 *获取栈顶元素top()
-	 *判断是否为空isEmpty();
+	 * 入栈push(int x) 出栈pop(); 获取栈顶元素top() 判断是否为空isEmpty();
 	 *
 	 */
 	class stack {
-		private List<Integer> data; // store elements
+		private int[] datas;
+		private int point ;
 
-		public stack() {
-			data = new ArrayList<>();
+		public stack(int size) {
+			datas = new int[size];
+			point =0;
 		}
 
 		/** Insert an element into the stack. */
 		public void push(int x) {
-			data.add(x);
+			if (point == datas.length)
+				throw new ArrayIndexOutOfBoundsException("栈满");
+			datas[point++] = x;
 		}
 
 		/** Checks whether the queue is empty or not. */
 		public boolean isEmpty() {
-			return data.isEmpty();
+			if (point == 0)
+				return false;
+			return true;
 		}
 
 		/** Get the top item from the queue. */
-		public int top() {
-			return data.get(data.size() - 1);
+		public int peek() {
+			if (isEmpty()) {
+				throw new ArrayIndexOutOfBoundsException("栈空");
+			}
+			return datas[point - 1];
 		}
 
 		/**
 		 * Delete an element from the queue. Return true if the operation is successful.
 		 */
-		public boolean pop() {
+		public int pop() {
+
 			if (isEmpty()) {
-				return false;
+				throw new ArrayIndexOutOfBoundsException("栈空");
 			}
-			data.remove(data.size() - 1);
-			return true;
+			return datas[--point];
+
 		}
 
 	}
-	
+
 	class MinStack {
+		// 库栈
 		// 库栈
 		private Stack<Integer> stack;
 		// 最小值
-		private int min = Integer.MAX_VALUE;
-		private Map<Integer, Integer> count = new HashMap<Integer, Integer>();
-		//初始化
+		private Stack<Integer> stackMin;
+
+		// 初始化
 		public MinStack() {
 			stack = new Stack<Integer>();
+			stackMin = new Stack<Integer>();
 		}
-		//进栈
-		public void push(int x) {
-			if (x <= min) {
-				min = x;
-				if (count.containsKey(x)) {
-					count.put(x, count.get(x) + 1);
-				} else {
-					count.put(x, 1);
-				}
-			}
-			stack.push(x);
-		}
-		//出栈
-		public void pop()
-		{
-			Integer pop=stack.pop();
-			if(min==pop)
-			{
-				if(count.get(pop)==1)
-				{
-					count.remove(pop);
-					min=Integer.MAX_VALUE;
-					for(Integer number:count.keySet())
-					{
-						if(min>number)
-						{
-							min=number;
-						}
-						else
-						{
-							continue;
-						}
-					}
-				}
-				else
-				{
-					count.put(min,count.get(min)-1);
-				}
-			}
-		}
-		public int top()
-		{
-			if(stack.size()==0)
-			{
-				return 0;
-			}
+
+		// 进栈
+		public void push(int newData) {
+
+			stack.push(newData);
+			if (stackMin.size() == 0)
+				stackMin.push(newData);
+			else if (stackMin.peek() < newData)
+				stackMin.push(stackMin.peek());
 			else
-			{
-				return stack.get(stack.size()-1);
-			}
+				stackMin.push(newData);
 		}
-		//返回最小数
-		public int getMin()
-		{
-			return min;
+
+		// 出栈
+		public int pop() {
+			if (stackMin.size() == 0)
+				throw new RuntimeException("栈空");
+			stack.pop();
+			return stackMin.pop();
+		}
+
+		// 返回最小数
+		public int getMin() {
+			if (stackMin.size() == 0)
+				throw new RuntimeException("栈空");
+			return stackMin.peek();
+		}
+		//返回栈顶元素
+		public int top() {
+			if (stack.size() == 0)
+				throw new RuntimeException("栈空");
+			return stack.peek();
 		}
 	}
 }

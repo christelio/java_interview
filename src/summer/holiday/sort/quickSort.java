@@ -1,7 +1,12 @@
 package summer.holiday.sort;
 
 public class quickSort {
-	//随机元素结点选取的快排
+
+	
+	
+	
+	
+	// 随机元素结点选取的快排
 	public static void quickSortR(int[] arr, int l, int r) {
 
 		if (l < r) {

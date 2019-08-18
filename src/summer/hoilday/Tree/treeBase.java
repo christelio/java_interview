@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Queue;
 
 import summer.hoilday.Tree.TreeTraversal.Node;
-
-public class treeAlg {
+/*二叉树的基础问题*/
+public class treeBase {
 	
 		//前序遍历
 		public void preTree( TreeNode root) {
@@ -162,7 +162,7 @@ public class treeAlg {
 	}
 	
 	// 二叉树序列化与反序列化
-	// 序列化
+	// 中序遍历序列化
 	public String serialize(TreeNode root) {
 		return find1(root, "");
 
@@ -180,7 +180,7 @@ public class treeAlg {
 		return str;
 	}
 
-	// 反序列化
+	// 反序列化 深度优先遍历构造
 	// Decodes your encoded data to tree.
 	 public TreeNode rdeserialize(List<String> l) {
 		    // Recursive deserialization.
@@ -204,76 +204,14 @@ public class treeAlg {
 		    return rdeserialize(data_list);
 		  }
 
-	/*判断是否是二叉搜索树*/
-	
-	public boolean helper(TreeNode node, Integer lower, Integer upper) {
-		if (node == null)
-			return true;
-		int val = node.val;
-		if (upper != null && val >= upper)
-			return false;
-		if (lower != null && val <= lower)
-			return false;
 
-		if (!helper(node.left, lower, val))
-			return false;
-		if (!helper(node.right, val, upper))
-			return false;
-		return true;
-
-	}
-
-	public boolean isValidBST(TreeNode root) {
-		return helper(root, null, null);
-	}
-	/*迭代二叉搜索树,每次迭代最小的元素
-	 * 
-	 * next()用来推出最小的元素
-	 * hasNext()判断是否存在下一个元素
-	 * */
-	  
-	TreeNode current;
-	Queue<Integer> queue;
-
-	public void BSTIterator(TreeNode root) {
-        this.current=root;
-        queue=new LinkedList();
-        in(current);
-    }
-
-	public void in(TreeNode root) {
-		if (root == null)
-			return;
-		in(root.left);
-		queue.add(root.val);
-		in(root.right);
-	}
-
-	/** @return the next smallest number */
-	public int next() {
-		if (!queue.isEmpty()) {
-			return queue.poll();
-		}
-		return -1;
-	}
-
-	/** @return whether we have a next smallest number */
-	public boolean hasNext() {
-		if (queue.isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 
 	public static void main(String[] args) {
 
-		treeAlg demo=new treeAlg();
+		treeBase demo=new treeBase();
 		int a[]= {1,5,4,6,7,9,12};
 		int b[]= {1,4,7,6,12,9,5};
 		TreeNode node=demo.buildTree(a,b);
 		demo.preTree(node);
-		demo.isValidBST(node);
-		System.out.println(demo.isValidBST(node));
 	}
 }

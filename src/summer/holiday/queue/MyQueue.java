@@ -6,13 +6,10 @@ import java.util.List;
 public class MyQueue {
 	// 只有队头指针的队列 基于List实现
 	/*
-	 * enQueue(int x)入队
-	 * deQueue()出队
-	 * isEmpty()判断非空
-	 * Font()取出对头元素
+	 * enQueue(int x)入队 deQueue()出队 isEmpty()判断非空 Font()取出对头元素
 	 * 
 	 * 
-	 * */
+	 */
 	class Queue {
 		// 队列
 		private List<Integer> data;
@@ -49,73 +46,52 @@ public class MyQueue {
 		}
 	}
 
-	
-	//循环队列
-	/*基于数组实现的循环队列
-	 * enQueue(int x)入队
+	// 循环队列
+	/*
+	 * 基于数组实现的循环队列 enQueue(int x)入队
 	 * 
 	 * 
-	 * */
+	 */
 	class CircularQueue {
 		// 队列
-		private int[] data;
+		private Integer[] datas;
 		// 队头
-		private int head;
+		private Integer head;
 		// 队尾
-		private int tail;
-		private int size;
+		private Integer tail;
+		// 判断队空或队满的变量,将队头和队尾解耦
+		private Integer size;
 
-		public CircularQueue(int k) {
-			data = new int[k];
-			head = -1;
-			tail = -1;
-			size = k;
+		public CircularQueue(int length) {
+
+			datas = new Integer[length];
+			head = 0;
+			tail = 0;
+			size = 0;
 		}
 
-		// 入队
-		public boolean enQueue(int value) {
-			if (isFull() == true) {
-				return false;
-			}
-			if (isEmpty() == true) {
-				head = 0;
-			}
-			tail = (tail + 1) % size;// 循环队列
-			data[tail] = value;
-			return true;
-		}
-
-		// 出队
-		public boolean deQueue() {
-			if (isEmpty() == true) {
-				return false;
-			}
-			if (head == tail) {
-				head = -1;
-				tail = -1;
-				return true;
-			}
-			head = (head + 1) % size;
-			return true;
-		}
-
-		// 查看对头元素
-		public int Front() {
-			if (isEmpty() == true) {
-				return -1;
-			}
-			return data[head];
-		}
-
-		// 判断非空
-		public boolean isEmpty() {
-			return head == -1;
+		public int push(int data) {
+			if (size == datas.length)
+				throw new ArrayIndexOutOfBoundsException("队满");
+			datas[tail] = data;
+			size++;
+			tail = nextIndex(datas.length, tail);
+			return 0;
 		}
 
 		// 判断是否队满
-		public boolean isFull() {
-			return ((tail + 1) % size) == head;
+		public int pop() {
+			if (size == 0)
+				throw new ArrayIndexOutOfBoundsException("队空");
+			size--;
+			int temp = datas[head];
+			head = nextIndex(datas.length, head);
+			return temp;
 
+		}
+
+		public int nextIndex(int length, int index) {
+			return index == length - 1 ? 0 : index + 1;
 		}
 
 	}
